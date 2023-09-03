@@ -21,10 +21,10 @@ class JsonImporter(Importer):
 
     def import_data(self) -> List[Product]:
         with open(self.path, "r") as jsonFile:
-            products_data = json.load(jsonFile)
+            prod_data = json.load(jsonFile)
             # usa o "desempacotamento" ou "unpacking" do python para passar
-            # dos os valores de cada produto em products_data
-            return [Product(*product.values()) for product in products_data]
+            # dos os valores de cada produto em prod_data
+            return [Product(*product.values()) for product in prod_data]
 
 
 class CsvImporter(Importer):
