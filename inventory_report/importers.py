@@ -1,4 +1,4 @@
-from typing import Dict, Type, List
+from typing import List
 from abc import ABC, abstractmethod
 from inventory_report.product import Product
 
