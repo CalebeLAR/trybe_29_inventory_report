@@ -6,21 +6,27 @@ from inventory_report.product import Product
 
 # interface
 class Importer(ABC):
+    def __init__(self, path: str) -> None:
+        pass
+
     @abstractmethod
-    def import_data(self, path_file: str) -> List[Product]:
+    def import_data(self) -> List[Product]:
         pass
 
 
 class JsonImporter(Importer):
-    def import_data(self, path_file: str) -> List[Product]:
-        with open(path_file, "r") as jsonFile:
+    def __init__(self, path: str) -> None:
+        self.path = path
+
+    def import_data(self) -> List[Product]:
+        with open(self.path, "r") as jsonFile:
             products_data = json.load(jsonFile)
             # usa o "desempacotamento" ou "unpacking" do python para passar
             # dos os valores de cada produto em products_data
             return [Product(*product.values()) for product in products_data]
 
 
-class CsvImporter:
+class CsvImporter(Importer):
     pass
 
 
@@ -31,6 +37,6 @@ IMPORTERS: Dict[str, Type[Importer]] = {
     "csv": CsvImporter,
 }
 
-# jsonImporter = JsonImporter()
-# lista = jsonImporter.import_data("inventory_report/data/inventory.json")
+# jsonImporter = JsonImporter("inventory_report/data/inventory.json")
+# lista = jsonImporter.import_data()
 # print(repr(lista[0]))
